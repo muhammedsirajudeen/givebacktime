@@ -1,5 +1,5 @@
 import './globals.css'
-import Navbar from '@/Navbar/Navbar'
+import Navbar from '@/Components/Navbar/Navbar'
 export const metadata = {
   title: 'Givebacktime Donate your time and skills',
   description: 'Sustainable development for the betterment of society',

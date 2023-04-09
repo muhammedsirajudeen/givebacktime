@@ -1,8 +1,8 @@
 "use client"
 
-import styles from './page.module.css'
+import styles from '../page.module.css'
 import { ChangeEvent, MouseEventHandler, ReactNode, useState } from 'react'
-
+import Signinbutton from '../../Components/Buttons/googleSignin'
 
 export default function Signup() {
     
@@ -71,6 +71,9 @@ export default function Signup() {
             
         }
     }
+    function googleSignupHandler(){
+        console.log("hello")
+    }
 
     return (
         <main className={styles.main}>
@@ -86,7 +89,9 @@ export default function Signup() {
             {lengthValidator()? <p className={styles.alert}>the password or username must be more than 8 characters</p> : null}
             {hasSpecialCharacters()? <p className={styles.alert} >the username or password cannot contain special characters</p>:null}
             {passwordChecker()}
+            <Signinbutton height={30} width={30} onClick={googleSignupHandler} labelstring={"Google Signup"}/>
             <button className={styles.loginbutton} onClick={loginHandler} > Login</button>
+           
             </div>
         </div>
         </main>

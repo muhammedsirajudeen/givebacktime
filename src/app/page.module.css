@@ -6,42 +6,87 @@
   margin-top: 5%;
 }
 .color{
-  color: yellow;
+color: yellow;
 }
 .logincontainer{
-  margin-top: 15%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 80%;
-  height: 40vh;
-  border-width: 1px;
-  border-style: solid;
+margin-top: 15%;
+display: flex;
+align-items: center;
+flex-direction: column;
+width: 80%;
+height: 40vh;
+border-width: 1px;
+border-style: solid;
 }
 .inputfieldcontainer{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 15%;
-  height: 100%;
-  width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 15%;
+height: 100%;
+width: 100%;
 
 }
 .inputfield{
-  width: 80%;
-  height: 10%;
-  margin: 3%;
+width: 80%;
+height: 10%;
+margin: 3%;
 }
 .loginbutton{
-  background-color: yellow;
-  color: black;
-  border-style: hidden;
-  width: 40%;
-  height: 10%;
-  border-radius: 10px;
-  font-weight: 900;
+background-color: yellow;
+color: black;
+border-style: hidden;
+width: 40%;
+height: 10%;
+border-radius: 10px;
+font-weight: 900;
+margin-top: 5%;
 }
 .alert{
-  font-size: x-small;
-  
+font-size: x-small;
+
+}
+.passwordredalert{
+font-size: x-small;
+color:red
+}
+.passwordgreenalert{
+font-size: x-small;
+color: green;
+}
+@media (min-width:1200px){
+  .logincontainer{
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 30%;
+    height: 50vh;
+    border-width: 1px;
+    border-style: solid;
+    }
+  .inputfieldcontainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+    height: 100%;
+    width: 100%;
+    
+    }
+  .loginbutton{
+    background-color: yellow;
+    color: black;
+    border-style: hidden;
+    width: 20%;
+    height: 7%;
+    border-radius: 5px;
+    font-weight: 900;
+    margin-top: 2%;
+    }
+  .inputfield{
+    width: 80%;
+    height: 7%;
+    margin: 3%;
+    }
 }
