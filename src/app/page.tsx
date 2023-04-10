@@ -1,14 +1,16 @@
 "use client"
-
 import styles from './page.module.css'
-import { ChangeEvent, MouseEventHandler, ReactNode, useState } from 'react'
+import { ChangeEvent,useEffect,useState } from 'react'
 import Signinbutton from '@/Components/Buttons/googleSignin'
-
+import { useAppSelector } from '@/State/useAppSelector'
 export default function Home() {
   const [name,setName]=useState("")
   const [password,setPassword]=useState("")
   const minlength:number=8
   const pattern = /[ `!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/
+  // const globalvalue=useAppSelector((state)=>state.analytics.data)
+  
+  
   function nameHandler(e:ChangeEvent<HTMLInputElement>):void{
     setName(e.target.value)
 
