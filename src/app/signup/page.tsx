@@ -16,6 +16,7 @@ export default function Signup() {
     const pattern = /[ `!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
     const firebaseApp=useRef<FirebaseApp>()
     const [createAccount,setCreateAccount]=useState(false)
+    console.log(process.env.NEXT_PUBLIC_FIREBASE_APIKEY)
     let auth:Auth
     //same here
     useAppSelector((state)=>{
