@@ -1,14 +1,16 @@
 "use client"
 import styles from './page.module.css'
-import { ChangeEvent,useEffect,useState } from 'react'
+import { ChangeEvent,useEffect,useRef,useState } from 'react'
 import Signinbutton from '@/Components/Buttons/googleSignin'
 import { useAppSelector } from '@/State/useAppSelector'
+import type {FirebaseApp} from "firebase/app"
 export default function Home() {
   const [name,setName]=useState("")
   const [password,setPassword]=useState("")
+  const firebaseApp=useRef<FirebaseApp>()
   const minlength:number=8
   const pattern = /[ `!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/
-  // const globalvalue=useAppSelector((state)=>state.analytics.data)
+  const globalvalue=useAppSelector((state)=> firebaseApp.current=state.firebase.app)
   
   
   function nameHandler(e:ChangeEvent<HTMLInputElement>):void{

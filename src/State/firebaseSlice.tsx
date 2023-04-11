@@ -1,8 +1,10 @@
-
 import { createSlice } from "@reduxjs/toolkit"
+import firebaseConfig from "@/FirebaseHelper/Authentication"
+import { initializeApp } from "firebase/app";
+const app=initializeApp(firebaseConfig)
 
 const initialState={
-    app:null
+    app:app
 }
 
 const firebaseSlice=createSlice({
