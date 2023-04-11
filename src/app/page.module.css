@@ -32,15 +32,28 @@ width: 80%;
 height: 10%;
 margin: 3%;
 }
+.hidebutton{
+  display: none;
+}
 .loginbutton{
-background-color: yellow;
-color: black;
-border-style: hidden;
-width: 40%;
-height: 10%;
-border-radius: 10px;
-font-weight: 900;
-margin-top: 5%;
+  background-color: yellow;
+  color: black;
+  border-style: hidden;
+  width: auto;
+  height: 10%;
+  border-radius: 10px;
+  font-weight: 900;
+  margin-top: 5%;
+}
+.createbutton{
+  background-color: yellow;
+  color: black;
+  border-style: hidden;
+  width: auto;
+  height: 10%;
+  border-radius: 10px;
+  font-weight: 900;
+  margin-top: 5%;
 }
 .alert{
 font-size: x-small;
