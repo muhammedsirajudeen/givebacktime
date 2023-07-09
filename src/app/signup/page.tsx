@@ -1,12 +1,15 @@
 "use client"
 
 import styles from '../page.module.css'
-import { ChangeEvent, MouseEventHandler, ReactNode, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, memo, useMemo, useRef, useState } from 'react'
 import Signinbutton from '../../Components/Buttons/googleSignin'
 import { FirebaseApp } from 'firebase/app'
 import { actionCodeSettings } from '@/FirebaseHelper/ActionCode'
 import { getAuth, Auth,createUserWithEmailAndPassword, sendSignInLinkToEmail } from "firebase/auth";
 import { useAppSelector } from '@/State/useAppSelector'
+import { Firestore, getFirestore } from 'firebase/firestore'
+import { collection, addDoc } from "firebase/firestore"; 
+
 export default function Signup() {
     
     const [name,setName]=useState("")
@@ -15,16 +18,14 @@ export default function Signup() {
     const minlength:number=8
     const pattern = /[ `!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
     const firebaseApp=useRef<FirebaseApp>()
-    const [createAccount,setCreateAccount]=useState(false)
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_APIKEY)
-    let auth:Auth
-    //same here
+    
+    let auth:Auth    
+    let db:Firestore
     useAppSelector((state)=>{
         firebaseApp.current=state.firebase.app
         auth=getAuth(firebaseApp.current)
-        
+        db=getFirestore(firebaseApp.current)
     })
-   
     function nameHandler(e:ChangeEvent<HTMLInputElement>):void{
         setName(e.target.value)
 
@@ -75,16 +76,46 @@ export default function Signup() {
     function createAccountHandler():void {
         
         if(password.length>=8 && name.length>=8 && password===confirmpassword && !pattern.test(name) && !pattern.test(password) )  {
-            // const auth=getAuth(firebaseApp.current)
+            
             createUserWithEmailAndPassword(auth,name,password).then((userCredential)=>{
                 const user=userCredential.user
-                console.log(user)
-                setCreateAccount(true)
+                window.localStorage.setItem("uid",user.uid)
+                return userCredential.user.getIdToken()
+                
 
-            }).catch((error)=>{
+            }).then((accessToken)=>{
+                console.log(accessToken)
+                window.localStorage.setItem("token",accessToken)
+                sendSignInLinkToEmail(auth, name, actionCodeSettings)
+                .then(async () => {
+                    alert("email sent successfully")
+                    window.localStorage.setItem('emailForSignIn', name)
+                    
+                    //hash the password according to it
+
+                    addDoc(collection(db, "UserEmailVerificationStatus"), {
+                        email: name,
+                        verified:false    
+                      }).then(()=>{
+                        window.location.href="/uploaduserdetails"
+
+                      })
+                    
+                  })
+                  //find the type of this error message
+                .catch((error) => {
+        
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode,errorMessage)
+                });
+
+            })
+            .catch((error)=>{
                 const errorCode=error.code
                 const errorMessage=error.message
                 console.log(errorMessage)
+                
             })
 
         }
@@ -97,18 +128,8 @@ export default function Signup() {
         }
     }
     function verifyAccountHandler():void{
-        const auth=getAuth(firebaseApp.current)
-        sendSignInLinkToEmail(auth, name, actionCodeSettings)
-        .then(() => {
-            alert("email sent successfully")
-            window.localStorage.setItem('emailForSignIn', name);
-          })
-        .catch((error:any) => {
-
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode,errorMessage)
-        });
+    
+ 
     }
     function googleSignupHandler(){
         console.log("hello")
@@ -125,7 +146,7 @@ export default function Signup() {
             <input type='password' className={styles.inputfield} placeholder='password' onChange={passwordHandler} value={password} />
             <input type='password' className={styles.inputfield} placeholder='password' onChange={confirmpasswordHandler} value={confirmpassword} />
             <button className={styles.createbutton} onClick={createAccountHandler} > Create Account</button>
-            <button className={createAccount? styles.loginbutton :styles.hidebutton}  onClick={verifyAccountHandler} > Verify Email</button>
+            
             {lengthValidator()? <p className={styles.alert}>the password or username must be more than 8 characters</p> : null}
             {hasSpecialCharacters()? <p className={styles.alert} >the username or password cannot contain special characters</p>:null}
             {passwordChecker()}

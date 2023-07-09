@@ -24,15 +24,16 @@ export default function VerifyEmail(){
                 .then( async (result) => {
                     setinitialState("email verified")
                     
+                    
+                    //here we do need to set the get the token as the token is already verified we can however
+                    //we can set the collection marked as verified so that when the user requests for it
+                    //it knows that the email is already verified
                     window.localStorage.removeItem('emailForSignIn');
-                    let response=await axios.post("/api/getToken",{
-                        email:email
-                    })
-                    console.log(response.data)
+                    
     
             })
                 .catch((error) => {
-    
+        
             });
         }
     }
